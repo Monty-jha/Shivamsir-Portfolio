@@ -186,11 +186,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/admin/login", async (req, res) => {
     const { username, password } = req.body;
     
+    console.log('Login attempt:', { username, password: password ? '*****' : 'undefined' });
+    console.log('Expected username:', 'shivam@metagrow.com');
+    console.log('Username match:', username === 'shivam@metagrow.com');
+    console.log('Password match:', password === 'Adminshivam@9554');
+    
     // Check credentials
     if (username === 'shivam@metagrow.com' && password === 'Adminshivam@9554') {
       req.session.adminAuthenticated = true;
+      console.log('Login successful! Session:', req.session);
       res.redirect('/admin');
     } else {
+      console.log('Login failed - invalid credentials');
       res.status(401).json({ error: 'Invalid credentials' });
     }
   });

@@ -16,15 +16,21 @@ export default function HeroSection() {
   };
 
   return (
-    <section id="home" className="hero-gradient min-h-screen flex items-center relative overflow-hidden">
+    <section id="home" className="hero-gradient min-h-screen flex items-center relative overflow-hidden pt-20">
       <div className="absolute inset-0 bg-black/10"></div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="text-white animate-slide-up">
-            <h1 className="font-inter font-bold text-4xl md:text-5xl lg:text-6xl leading-tight mb-6">
+            <div className="mb-6">
+              <h1 className="font-inter font-bold text-4xl md:text-5xl lg:text-6xl leading-tight mb-2">
+                <span className="text-coral-light">Shivam Mani Tripathi</span>
+              </h1>
+              <p className="text-xl text-white/90 font-semibold mb-4">Wealth Manager at MetaGrow</p>
+            </div>
+            <h2 className="font-inter font-bold text-3xl md:text-4xl lg:text-5xl leading-tight mb-6">
               Building Wealth,<br />
               <span className="text-coral-light">Securing Futures</span>
-            </h1>
+            </h2>
             <p className="text-xl mb-8 text-white/90 font-lato leading-relaxed">
               Expert wealth management services tailored to your financial goals. With MetaGrow's innovative approach and my personalized strategies, let's create your path to financial freedom.
             </p>

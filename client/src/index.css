@@ -1,0 +1,191 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Lato:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 0 0% 100%; /* #FFFFFF */
+  --foreground: 210 11% 15%; /* #333333 */
+  --muted: 210 40% 98%; /* #F8FAFC */
+  --muted-foreground: 215 16% 47%; /* #64748B */
+  --popover: 0 0% 100%; /* #FFFFFF */
+  --popover-foreground: 210 11% 15%; /* #333333 */
+  --card: 0 0% 100%; /* #FFFFFF */
+  --card-foreground: 210 11% 15%; /* #333333 */
+  --border: 220 13% 91%; /* #E2E8F0 */
+  --input: 220 13% 91%; /* #E2E8F0 */
+  --primary: 11 89% 67%; /* #FF6B6B */
+  --primary-foreground: 0 0% 100%; /* #FFFFFF */
+  --secondary: 20 100% 63%; /* #FF8C42 */
+  --secondary-foreground: 0 0% 100%; /* #FFFFFF */
+  --accent: 11 100% 93%; /* #FFE3D8 */
+  --accent-foreground: 11 89% 67%; /* #FF6B6B */
+  --destructive: 0 84% 60%; /* #EF4444 */
+  --destructive-foreground: 0 0% 98%; /* #FAFAFA */
+  --ring: 11 89% 67%; /* #FF6B6B */
+  --radius: 0.5rem;
+
+  /* Custom coral colors */
+  --coral: 11 89% 67%; /* #FF6B6B */
+  --orange-warm: 20 100% 63%; /* #FF8C42 */
+  --coral-light: 11 100% 93%; /* #FFE3D8 */
+}
+
+.dark {
+  --background: 222 84% 5%; /* #0A0A0A */
+  --foreground: 210 40% 98%; /* #F8FAFC */
+  --muted: 217 33% 17%; /* #1E293B */
+  --muted-foreground: 215 20% 65%; /* #94A3B8 */
+  --popover: 222 84% 5%; /* #0A0A0A */
+  --popover-foreground: 210 40% 98%; /* #F8FAFC */
+  --card: 222 84% 5%; /* #0A0A0A */
+  --card-foreground: 210 40% 98%; /* #F8FAFC */
+  --border: 217 33% 17%; /* #1E293B */
+  --input: 217 33% 17%; /* #1E293B */
+  --primary: 11 89% 67%; /* #FF6B6B */
+  --primary-foreground: 0 0% 100%; /* #FFFFFF */
+  --secondary: 20 100% 63%; /* #FF8C42 */
+  --secondary-foreground: 0 0% 100%; /* #FFFFFF */
+  --accent: 217 33% 17%; /* #1E293B */
+  --accent-foreground: 210 40% 98%; /* #F8FAFC */
+  --destructive: 0 62% 30%; /* #7F1D1D */
+  --destructive-foreground: 210 40% 98%; /* #F8FAFC */
+  --ring: 11 89% 67%; /* #FF6B6B */
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Lato', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+@layer utilities {
+  .font-inter {
+    font-family: 'Inter', sans-serif;
+  }
+  
+  .font-lato {
+    font-family: 'Lato', sans-serif;
+  }
+
+  .text-coral {
+    color: hsl(var(--coral));
+  }
+
+  .text-orange-warm {
+    color: hsl(var(--orange-warm));
+  }
+
+  .text-coral-light {
+    color: hsl(var(--coral-light));
+  }
+
+  .bg-coral {
+    background-color: hsl(var(--coral));
+  }
+
+  .bg-orange-warm {
+    background-color: hsl(var(--orange-warm));
+  }
+
+  .bg-coral-light {
+    background-color: hsl(var(--coral-light));
+  }
+
+  .bg-gradient-coral {
+    background: linear-gradient(135deg, hsl(var(--coral)) 0%, hsl(var(--orange-warm)) 100%);
+  }
+
+  .bg-gradient-light {
+    background: linear-gradient(135deg, hsl(var(--coral-light)) 0%, #FFF5F0 100%);
+  }
+
+  .hero-gradient {
+    background: linear-gradient(135deg, hsl(var(--coral)) 0%, hsl(var(--orange-warm)) 100%);
+  }
+
+  .scroll-smooth {
+    scroll-behavior: smooth;
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.8s ease-out;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 1s ease-out;
+  }
+}
+
+@keyframes float {
+  0%, 100% { 
+    transform: translateY(0px); 
+  }
+  50% { 
+    transform: translateY(-20px); 
+  }
+}
+
+@keyframes slideUp {
+  from { 
+    transform: translateY(50px); 
+    opacity: 0; 
+  }
+  to { 
+    transform: translateY(0); 
+    opacity: 1; 
+  }
+}
+
+@keyframes fadeIn {
+  from { 
+    opacity: 0; 
+  }
+  to { 
+    opacity: 1; 
+  }
+}
+
+.card-hover {
+  transition: all 0.3s ease-in-out;
+}
+
+.card-hover:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(255, 107, 107, 0.15);
+}
+
+.btn-gradient {
+  background: linear-gradient(135deg, hsl(var(--coral)) 0%, hsl(var(--orange-warm)) 100%);
+  transition: all 0.3s ease-in-out;
+}
+
+.btn-gradient:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
+}
+
+.intersection-observe {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease-out;
+}
+
+.intersection-observe.visible {
+  opacity: 1;
+  transform: translateY(0);
+}

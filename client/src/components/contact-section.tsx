@@ -92,8 +92,8 @@ export default function ContactSection() {
                   </div>
                   <div>
                     <div className="font-medium text-foreground">WhatsApp</div>
-                    <a href="https://wa.me/+919876543210" className="text-coral hover:text-orange-warm transition-colors" target="_blank" rel="noopener noreferrer">
-                      +91 98765 43210
+                    <a href="https://wa.me/+918299559257" className="text-coral hover:text-orange-warm transition-colors" target="_blank" rel="noopener noreferrer">
+                      +91 8299559257
                     </a>
                   </div>
                 </div>
@@ -137,7 +137,7 @@ export default function ContactSection() {
             {/* Quick Actions */}
             <div className="grid grid-cols-2 gap-4">
               <a 
-                href="https://wa.me/+919876543210" 
+                href="https://wa.me/+918299559257" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="bg-green-500 hover:bg-green-600 text-white rounded-xl p-4 text-center transition-all duration-300 transform hover:scale-105 shine-effect animate-pulse-glow"

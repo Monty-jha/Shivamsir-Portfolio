@@ -47,7 +47,7 @@ export default function HeroSection() {
             
             {/* Social Links */}
             <div className="flex space-x-6 mt-8">
-              <a href="https://wa.me/+919876543210" className="text-white/80 hover:text-white transition-colors duration-300" target="_blank" rel="noopener noreferrer">
+              <a href="https://wa.me/+918299559257" className="text-white/80 hover:text-white transition-colors duration-300" target="_blank" rel="noopener noreferrer">
                 <FaWhatsapp className="text-2xl" />
               </a>
               <a href="mailto:shivam@metagrow.com" className="text-white/80 hover:text-white transition-colors duration-300">

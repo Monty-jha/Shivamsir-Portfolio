@@ -132,10 +132,10 @@ export async function sendContactFormEmails(contact: Contact): Promise<void> {
                 <div style="margin: 30px 0;">
                     <h4 style="color: #2c3e50; text-align: center; margin-bottom: 20px; font-size: 18px;">🚀 Connect With Me Immediately</h4>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                        <a href="https://wa.me/+919876543210" style="display: block; background: linear-gradient(135deg, #25d366 0%, #128c7e 100%); color: white; text-decoration: none; padding: 15px; border-radius: 12px; text-align: center; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);">
+                        <a href="https://wa.me/+918299559257" style="display: block; background: linear-gradient(135deg, #25d366 0%, #128c7e 100%); color: white; text-decoration: none; padding: 15px; border-radius: 12px; text-align: center; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);">
                             <div style="font-size: 20px; margin-bottom: 5px;">📱</div>
                             <div style="font-weight: 600; font-size: 14px;">WhatsApp Chat</div>
-                            <div style="font-size: 12px; opacity: 0.9;">+91 98765 43210</div>
+                            <div style="font-size: 12px; opacity: 0.9;">+91 8299559257</div>
                         </a>
                         <a href="mailto:shivam@metagrow.com" style="display: block; background: linear-gradient(135deg, #FF6B6B 0%, #FF8C42 100%); color: white; text-decoration: none; padding: 15px; border-radius: 12px; text-align: center; box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);">
                             <div style="font-size: 20px; margin-bottom: 5px;">📧</div>

@@ -37,7 +37,7 @@ export default function Footer() {
               Professional wealth management services with MetaGrow. Building your financial future with expertise and trust.
             </p>
             <div className="flex space-x-4">
-              <a href="https://wa.me/+919876543210" className="text-gray-400 hover:text-white transition-colors" target="_blank" rel="noopener noreferrer">
+              <a href="https://wa.me/+918299559257" className="text-gray-400 hover:text-white transition-colors" target="_blank" rel="noopener noreferrer">
                 <FaWhatsapp className="text-xl" />
               </a>
               <a href="mailto:shivam@metagrow.com" className="text-gray-400 hover:text-white transition-colors">

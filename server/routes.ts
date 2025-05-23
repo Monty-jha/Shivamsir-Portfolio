@@ -162,9 +162,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
               document.getElementById('loginForm').onsubmit = async function(e) {
                   e.preventDefault();
                   const formData = new FormData(this);
+                  
+                  // Convert FormData to JSON
+                  const data = {
+                      username: formData.get('username'),
+                      password: formData.get('password')
+                  };
+                  
                   const response = await fetch('/admin/login', {
                       method: 'POST',
-                      body: formData
+                      headers: {
+                          'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify(data)
                   });
                   
                   if (response.ok) {
@@ -186,16 +196,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/admin/login", async (req, res) => {
     const { username, password } = req.body;
     
-    console.log('Login attempt:', { username, password: password ? '*****' : 'undefined' });
-    console.log('Expected username:', 'shivam@metagrow.com');
-    console.log('Username match:', username === 'shivam@metagrow.com');
-    console.log('Password match:', password === 'Adminshivam@9554');
+    console.log('Request body:', req.body);
+    console.log('Login attempt:', { username, password: password ? 'provided' : 'missing' });
     
     // Check credentials
     if (username === 'shivam@metagrow.com' && password === 'Adminshivam@9554') {
       req.session.adminAuthenticated = true;
-      console.log('Login successful! Session:', req.session);
-      res.redirect('/admin');
+      console.log('Login successful!');
+      res.json({ success: true });
     } else {
       console.log('Login failed - invalid credentials');
       res.status(401).json({ error: 'Invalid credentials' });

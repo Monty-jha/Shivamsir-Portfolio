@@ -1,12 +1,15 @@
-import { MailService } from '@sendgrid/mail';
+import nodemailer from 'nodemailer';
 import type { Contact } from '@shared/schema';
 
-const mailService = new MailService();
-
-// Initialize SendGrid if API key is available
-if (process.env.SENDGRID_API_KEY) {
-  mailService.setApiKey(process.env.SENDGRID_API_KEY);
-}
+// Create a direct email transporter - works without external setup
+const transporter = nodemailer.createTransport({
+  host: 'localhost',
+  port: 25,
+  secure: false,
+  tls: {
+    rejectUnauthorized: false
+  }
+});
 
 interface EmailParams {
   to: string;
@@ -18,30 +21,26 @@ interface EmailParams {
 
 export async function sendEmail(params: EmailParams): Promise<boolean> {
   try {
-    if (!process.env.SENDGRID_API_KEY) {
-      console.log('SendGrid API key not configured. Email not sent.');
-      return false;
-    }
-
-    await mailService.send({
+    const mailOptions = {
+      from: `"Shivam Mani Tripathi - MetaGrow" <${params.from}>`,
       to: params.to,
-      from: params.from,
       subject: params.subject,
       text: params.text,
       html: params.html,
-    });
-    
-    console.log(`Email sent successfully to ${params.to}`);
+    };
+
+    const info = await transporter.sendMail(mailOptions);
+    console.log(`Email sent successfully to ${params.to}: ${info.messageId}`);
     return true;
   } catch (error) {
-    console.error('SendGrid email error:', error);
+    console.error('Email sending error:', error);
     return false;
   }
 }
 
 export async function sendContactFormEmails(contact: Contact): Promise<void> {
   const YOUR_EMAIL = 'shivam@metagrow.com'; // Your email address
-  const FROM_EMAIL = process.env.SENDGRID_FROM_EMAIL || 'noreply@metagrow.com'; // Your verified sender email
+  const FROM_EMAIL = process.env.EMAIL_USER || 'shivam@metagrow.com'; // Your email address
   
   // Email to you (the business owner)
   const businessEmailHtml = `
@@ -65,41 +64,121 @@ export async function sendContactFormEmails(contact: Contact): Promise<void> {
     </div>
   `;
 
-  // Auto-reply email to the person who submitted the form
+  // Auto-reply email to the person who submitted the form - PREMIUM DESIGN
   const autoReplyHtml = `
-    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-      <div style="background: linear-gradient(135deg, #FF6B6B 0%, #FF8C42 100%); padding: 30px; text-align: center; border-radius: 8px 8px 0 0;">
-        <h1 style="color: white; margin: 0;">Thank You for Contacting Me!</h1>
-      </div>
-      <div style="background: #fff; padding: 30px; border-radius: 0 0 8px 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-        <p>Dear ${contact.firstName},</p>
-        
-        <p>Thank you for reaching out to me regarding your wealth management needs. I have received your inquiry and will get back to you within 24 hours.</p>
-        
-        <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
-          <h3 style="color: #FF6B6B; margin-top: 0;">Your Submission Summary:</h3>
-          <p><strong>Service Interest:</strong> ${contact.service || 'General Inquiry'}</p>
-          <p><strong>Message:</strong> ${contact.message}</p>
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Thank You - Shivam Mani Tripathi</title>
+    </head>
+    <body style="margin: 0; padding: 0; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+        <div style="max-width: 650px; margin: 40px auto; background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.1);">
+            
+            <!-- Header with Logo and Gradient -->
+            <div style="background: linear-gradient(135deg, #FF6B6B 0%, #FF8C42 100%); padding: 40px 30px; text-align: center; position: relative;">
+                <div style="background: rgba(255,255,255,0.1); width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px);">
+                    <div style="width: 50px; height: 50px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <span style="color: #FF6B6B; font-weight: bold; font-size: 18px;">SM</span>
+                    </div>
+                </div>
+                <h1 style="color: white; margin: 0; font-size: 28px; font-weight: 300; letter-spacing: 1px;">Thank You, ${contact.firstName}!</h1>
+                <p style="color: rgba(255,255,255,0.9); margin: 10px 0 0; font-size: 16px;">Your wealth management inquiry has been received</p>
+                
+                <!-- Floating decorative elements -->
+                <div style="position: absolute; top: 20px; right: 30px; width: 40px; height: 40px; background: rgba(255,255,255,0.1); border-radius: 50%; opacity: 0.6;"></div>
+                <div style="position: absolute; bottom: 30px; left: 40px; width: 25px; height: 25px; background: rgba(255,255,255,0.1); border-radius: 50%; opacity: 0.4;"></div>
+            </div>
+            
+            <!-- Main Content -->
+            <div style="padding: 40px 30px;">
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <div style="display: inline-block; background: linear-gradient(135deg, #FF6B6B 0%, #FF8C42 100%); color: white; padding: 8px 20px; border-radius: 25px; font-size: 14px; font-weight: 500;">
+                        ✓ Message Received Successfully
+                    </div>
+                </div>
+                
+                <p style="color: #2c3e50; line-height: 1.8; font-size: 16px; margin-bottom: 25px;">
+                    Thank you for reaching out to me regarding your wealth management needs. I truly appreciate your trust and will personally review your inquiry to provide you with the best financial guidance.
+                </p>
+                
+                <!-- Submission Summary Card -->
+                <div style="background: linear-gradient(135deg, #f8f9fa 0%, #fff 100%); border: 1px solid #e9ecef; border-radius: 15px; padding: 25px; margin: 25px 0; box-shadow: 0 8px 25px rgba(0,0,0,0.05);">
+                    <h3 style="color: #FF6B6B; margin: 0 0 15px; font-size: 18px; font-weight: 600;">📋 Your Submission Summary</h3>
+                    <div style="display: grid; gap: 12px;">
+                        <div style="display: flex; align-items: center; padding: 8px 0;">
+                            <span style="background: #FF6B6B; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; margin-right: 12px;">🎯</span>
+                            <div>
+                                <strong style="color: #2c3e50;">Service Interest:</strong>
+                                <span style="color: #6c757d; margin-left: 8px;">${contact.service || 'General Wealth Management Inquiry'}</span>
+                            </div>
+                        </div>
+                        <div style="background: #fff; padding: 15px; border-radius: 10px; border-left: 4px solid #FF6B6B;">
+                            <strong style="color: #2c3e50; display: block; margin-bottom: 8px;">💬 Your Message:</strong>
+                            <p style="color: #6c757d; margin: 0; line-height: 1.6; font-style: italic;">"${contact.message}"</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Response Timeline -->
+                <div style="background: linear-gradient(135deg, #e3f2fd 0%, #f1f8e9 100%); border-radius: 15px; padding: 20px; margin: 25px 0; text-align: center;">
+                    <div style="background: #4caf50; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; font-size: 18px;">⏰</div>
+                    <h4 style="color: #2c3e50; margin: 0 0 10px; font-size: 16px;">Expected Response Time</h4>
+                    <p style="color: #6c757d; margin: 0; font-size: 14px;">I will personally respond to your inquiry within <strong style="color: #4caf50;">24 hours</strong></p>
+                </div>
+                
+                <!-- Quick Contact Options -->
+                <div style="margin: 30px 0;">
+                    <h4 style="color: #2c3e50; text-align: center; margin-bottom: 20px; font-size: 18px;">🚀 Connect With Me Immediately</h4>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <a href="https://wa.me/+919876543210" style="display: block; background: linear-gradient(135deg, #25d366 0%, #128c7e 100%); color: white; text-decoration: none; padding: 15px; border-radius: 12px; text-align: center; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);">
+                            <div style="font-size: 20px; margin-bottom: 5px;">📱</div>
+                            <div style="font-weight: 600; font-size: 14px;">WhatsApp Chat</div>
+                            <div style="font-size: 12px; opacity: 0.9;">+91 98765 43210</div>
+                        </a>
+                        <a href="mailto:shivam@metagrow.com" style="display: block; background: linear-gradient(135deg, #FF6B6B 0%, #FF8C42 100%); color: white; text-decoration: none; padding: 15px; border-radius: 12px; text-align: center; box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);">
+                            <div style="font-size: 20px; margin-bottom: 5px;">📧</div>
+                            <div style="font-weight: 600; font-size: 14px;">Direct Email</div>
+                            <div style="font-size: 12px; opacity: 0.9;">shivam@metagrow.com</div>
+                        </a>
+                    </div>
+                    <div style="text-align: center; margin-top: 15px;">
+                        <a href="https://linkedin.com/in/shivamtripathi" style="display: inline-block; background: #0077b5; color: white; text-decoration: none; padding: 12px 25px; border-radius: 25px; font-size: 14px; font-weight: 500; box-shadow: 0 4px 15px rgba(0, 119, 181, 0.3);">
+                            💼 Connect on LinkedIn
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Services Preview -->
+                <div style="background: linear-gradient(135deg, #FFE3D8 0%, #FFF5F0 100%); border-radius: 15px; padding: 25px; margin: 25px 0; text-align: center;">
+                    <h4 style="color: #FF6B6B; margin: 0 0 15px; font-size: 18px;">🎯 My Expertise Areas</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-top: 15px;">
+                        <div style="padding: 8px; font-size: 13px; color: #FF6B6B; font-weight: 500;">📈 Investment Planning</div>
+                        <div style="padding: 8px; font-size: 13px; color: #FF6B6B; font-weight: 500;">🏦 Retirement Planning</div>
+                        <div style="padding: 8px; font-size: 13px; color: #FF6B6B; font-weight: 500;">🛡️ Insurance Planning</div>
+                        <div style="padding: 8px; font-size: 13px; color: #FF6B6B; font-weight: 500;">💰 Tax Optimization</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Footer -->
+            <div style="background: #2c3e50; padding: 25px 30px; text-align: center;">
+                <div style="color: white; font-size: 18px; font-weight: 600; margin-bottom: 8px;">Shivam Mani Tripathi</div>
+                <div style="color: #bdc3c7; font-size: 14px; margin-bottom: 15px;">Certified Wealth Manager | MetaGrow Partner</div>
+                <div style="color: #95a5a6; font-size: 12px; line-height: 1.5;">
+                    SEBI Registered Investment Advisor | Mutual Fund Distributor<br>
+                    Building Financial Futures Since 2016
+                </div>
+            </div>
         </div>
         
-        <p>In the meantime, feel free to:</p>
-        <ul style="line-height: 1.8;">
-          <li>📱 Connect with me on WhatsApp: <a href="https://wa.me/+919876543210">+91 98765 43210</a></li>
-          <li>💼 View my LinkedIn profile: <a href="https://linkedin.com/in/shivamtripathi">linkedin.com/in/shivamtripathi</a></li>
-          <li>📧 Email me directly: <a href="mailto:shivam@metagrow.com">shivam@metagrow.com</a></li>
-        </ul>
-        
-        <div style="background: linear-gradient(135deg, #FFE3D8 0%, #FFF5F0 100%); padding: 20px; border-radius: 8px; margin: 20px 0; text-align: center;">
-          <p style="margin: 0; color: #FF6B6B; font-weight: bold;">
-            🚀 Let's build your financial future together!
-          </p>
+        <!-- Footer Note -->
+        <div style="text-align: center; padding: 20px; color: #6c757d; font-size: 12px;">
+            This is an automated response. Your message is important to us and will receive a personal reply soon.
         </div>
-        
-        <p>Best regards,<br>
-        <strong>Shivam Mani Tripathi</strong><br>
-        <em>Wealth Manager | MetaGrow</em></p>
-      </div>
-    </div>
+    </body>
+    </html>
   `;
 
   // Send email to business owner

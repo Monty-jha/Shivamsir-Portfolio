@@ -1,4 +1,4 @@
-import shivamPhoto from "@assets/Untitled design (10).png";
+import shivamPhoto from "@assets/Untitled design (11).png";
 
 export default function AboutSection() {
   return (

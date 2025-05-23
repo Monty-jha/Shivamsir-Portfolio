@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Menu, X } from "lucide-react";
 
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -35,13 +36,9 @@ export default function Navigation() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center">
             <div className="w-10 h-10 bg-gradient-coral rounded-lg flex items-center justify-center">
               <span className="text-white font-inter font-bold text-lg">SM</span>
-            </div>
-            <div>
-              <div className="font-inter font-semibold text-lg text-foreground">Shivam Mani Tripathi</div>
-              <div className="text-sm text-muted-foreground">Wealth Manager</div>
             </div>
           </div>
           
@@ -60,7 +57,7 @@ export default function Navigation() {
             className="md:hidden text-foreground"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
-            <i className="fas fa-bars text-xl"></i>
+            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
         </div>
       </div>

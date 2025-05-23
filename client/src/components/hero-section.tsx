@@ -27,10 +27,6 @@ export default function HeroSection() {
               </h1>
               <p className="text-xl text-white/90 font-semibold mb-4">Wealth Manager at MetaGrow</p>
             </div>
-            <h2 className="font-inter font-bold text-3xl md:text-4xl lg:text-5xl leading-tight mb-6">
-              Building Wealth,<br />
-              <span className="text-coral-light">Securing Futures</span>
-            </h2>
             <p className="text-xl mb-8 text-white/90 font-lato leading-relaxed">
               Expert wealth management services tailored to your financial goals. With MetaGrow's innovative approach and my personalized strategies, let's create your path to financial freedom.
             </p>

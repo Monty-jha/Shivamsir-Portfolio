@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
+import logoPath from "@assets/Black White Simple Monochrome Initial Name Logo (2).png";
 
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -38,7 +39,7 @@ export default function Navigation() {
           {/* Logo */}
           <div className="flex items-center">
             <img 
-              src="/attached_assets/Black White Simple Monochrome Initial Name Logo (2).png" 
+              src={logoPath} 
               alt="Shivam Mani Tripathi Logo" 
               className="w-10 h-10 rounded-lg"
             />

@@ -1,4 +1,5 @@
 import { FaWhatsapp, FaEnvelope, FaLinkedin, FaPhone, FaClock } from "react-icons/fa";
+import logoPath from "@assets/Black White Simple Monochrome Initial Name Logo (2).png";
 
 export default function Footer() {
   const scrollToSection = (sectionId: string) => {
@@ -23,7 +24,7 @@ export default function Footer() {
           <div>
             <div className="flex items-center space-x-3 mb-6">
               <img 
-                src="/attached_assets/Black White Simple Monochrome Initial Name Logo (2).png" 
+                src={logoPath} 
                 alt="Shivam Mani Tripathi Logo" 
                 className="w-10 h-10 rounded-lg"
               />

@@ -1,3 +1,5 @@
+import shivamPhoto from "@assets/Untitled design (10).png";
+
 export default function AboutSection() {
   return (
     <section id="about" className="py-20 bg-white">
@@ -5,7 +7,7 @@ export default function AboutSection() {
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div className="intersection-observe">
             <img 
-              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=700" 
+              src={shivamPhoto} 
               alt="Shivam Mani Tripathi - Professional portrait" 
               className="rounded-2xl shadow-lg w-full" 
             />

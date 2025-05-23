@@ -33,13 +33,13 @@ export default function HeroSection() {
             <div className="flex flex-col sm:flex-row gap-4">
               <button 
                 onClick={() => scrollToSection('contact')}
-                className="bg-white text-coral hover:bg-coral-light transition-all duration-300 px-8 py-4 rounded-lg font-semibold text-center transform hover:scale-105"
+                className="bg-white text-coral hover:bg-coral-light transition-all duration-300 px-8 py-4 rounded-lg font-semibold text-center transform hover:scale-105 shine-effect animate-pulse-glow"
               >
                 Start Your Journey
               </button>
               <button 
                 onClick={() => scrollToSection('services')}
-                className="border-2 border-white text-white hover:bg-white hover:text-coral transition-all duration-300 px-8 py-4 rounded-lg font-semibold text-center"
+                className="border-2 border-white text-white hover:bg-white hover:text-coral transition-all duration-300 px-8 py-4 rounded-lg font-semibold text-center hover:scale-105 transform"
               >
                 Explore Services
               </button>
@@ -69,9 +69,11 @@ export default function HeroSection() {
         </div>
       </div>
       
-      {/* Floating Elements */}
-      <div className="absolute top-20 right-20 w-20 h-20 bg-white/10 rounded-full animate-float hidden lg:block"></div>
-      <div className="absolute bottom-40 left-20 w-16 h-16 bg-white/10 rounded-full animate-float hidden lg:block" style={{ animationDelay: '2s' }}></div>
+      {/* Enhanced Floating Elements */}
+      <div className="absolute top-20 right-20 w-20 h-20 bg-white/10 rounded-full floating-elements hidden lg:block"></div>
+      <div className="absolute bottom-40 left-20 w-16 h-16 bg-white/10 rounded-full floating-elements hidden lg:block" style={{ animationDelay: '2s' }}></div>
+      <div className="absolute top-1/2 right-1/4 w-12 h-12 bg-coral/20 rounded-full floating-elements hidden lg:block" style={{ animationDelay: '4s' }}></div>
+      <div className="absolute bottom-1/3 left-1/3 w-8 h-8 bg-orange-warm/20 rounded-full floating-elements hidden lg:block" style={{ animationDelay: '6s' }}></div>
     </section>
   );
 }

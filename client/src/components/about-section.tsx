@@ -9,7 +9,7 @@ export default function AboutSection() {
             <img 
               src={shivamPhoto} 
               alt="Shivam Mani Tripathi - Professional portrait" 
-              className="rounded-2xl shadow-lg w-full" 
+              className="rounded-2xl shadow-lg w-full scale-on-hover shine-effect" 
             />
           </div>
           

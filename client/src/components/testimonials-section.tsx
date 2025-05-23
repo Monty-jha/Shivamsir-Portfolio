@@ -63,7 +63,7 @@ export default function TestimonialsSection() {
         
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {testimonials.map((testimonial, index) => (
-            <div key={index} className="bg-gradient-light rounded-2xl p-8 card-hover intersection-observe">
+            <div key={index} className="bg-gradient-light rounded-2xl p-8 card-hover intersection-observe scale-on-hover shine-effect">
               <div className="flex items-center mb-6">
                 <div className="flex text-coral">
                   {[...Array(testimonial.rating)].map((_, i) => (

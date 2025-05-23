@@ -65,8 +65,8 @@ export default function ServicesSection() {
         
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, index) => (
-            <div key={index} className="bg-white rounded-2xl p-8 shadow-lg card-hover intersection-observe">
-              <div className="w-16 h-16 bg-gradient-coral rounded-xl flex items-center justify-center mb-6">
+            <div key={index} className="bg-white rounded-2xl p-8 shadow-lg card-hover intersection-observe scale-on-hover shine-effect">
+              <div className="w-16 h-16 bg-gradient-coral rounded-xl flex items-center justify-center mb-6 animate-bounce-soft">
                 <service.icon className="text-white text-2xl" />
               </div>
               <h3 className="font-inter font-semibold text-xl mb-4">{service.title}</h3>

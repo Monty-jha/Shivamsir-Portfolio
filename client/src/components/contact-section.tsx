@@ -140,16 +140,16 @@ export default function ContactSection() {
                 href="https://wa.me/+919876543210" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="bg-green-500 hover:bg-green-600 text-white rounded-xl p-4 text-center transition-all duration-300 transform hover:scale-105"
+                className="bg-green-500 hover:bg-green-600 text-white rounded-xl p-4 text-center transition-all duration-300 transform hover:scale-105 shine-effect animate-pulse-glow"
               >
-                <FaWhatsapp className="text-2xl mb-2 mx-auto" />
+                <FaWhatsapp className="text-2xl mb-2 mx-auto animate-bounce-soft" />
                 <span className="font-medium">Quick Chat</span>
               </a>
               <a 
                 href="mailto:shivam@metagrow.com" 
-                className="btn-gradient text-white rounded-xl p-4 text-center transition-all duration-300 transform hover:scale-105"
+                className="btn-gradient text-white rounded-xl p-4 text-center transition-all duration-300 transform hover:scale-105 shine-effect"
               >
-                <FaCalendar className="text-2xl mb-2 mx-auto" />
+                <FaCalendar className="text-2xl mb-2 mx-auto animate-bounce-soft" />
                 <span className="font-medium">Book Meeting</span>
               </a>
             </div>

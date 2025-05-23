@@ -37,9 +37,11 @@ export default function Navigation() {
         <div className="flex justify-between items-center h-14">
           {/* Logo */}
           <div className="flex items-center">
-            <div className="w-10 h-10 bg-gradient-coral rounded-lg flex items-center justify-center">
-              <span className="text-white font-inter font-bold text-lg">SM</span>
-            </div>
+            <img 
+              src="/attached_assets/Black White Simple Monochrome Initial Name Logo (2).png" 
+              alt="Shivam Mani Tripathi Logo" 
+              className="w-10 h-10 rounded-lg"
+            />
           </div>
           
           {/* Desktop Navigation */}

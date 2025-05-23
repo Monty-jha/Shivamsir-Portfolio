@@ -22,9 +22,11 @@ export default function Footer() {
           {/* Company Info */}
           <div>
             <div className="flex items-center space-x-3 mb-6">
-              <div className="w-10 h-10 bg-gradient-coral rounded-lg flex items-center justify-center">
-                <span className="text-white font-inter font-bold text-lg">SM</span>
-              </div>
+              <img 
+                src="/attached_assets/Black White Simple Monochrome Initial Name Logo (2).png" 
+                alt="Shivam Mani Tripathi Logo" 
+                className="w-10 h-10 rounded-lg"
+              />
               <div>
                 <div className="font-inter font-semibold text-lg">Shivam Mani Tripathi</div>
                 <div className="text-sm text-gray-400">Wealth Manager</div>

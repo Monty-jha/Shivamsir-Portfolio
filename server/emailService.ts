@@ -1,13 +1,12 @@
 import nodemailer from 'nodemailer';
 import type { Contact } from '@shared/schema';
 
-// Create a direct email transporter - works without external setup
+// Create a Vercel-compatible email transporter
 const transporter = nodemailer.createTransport({
-  host: 'localhost',
-  port: 25,
-  secure: false,
-  tls: {
-    rejectUnauthorized: false
+  service: 'gmail', // You can change this to your email provider
+  auth: {
+    user: process.env.EMAIL_USER || 'shivam@metagrow.com',
+    pass: process.env.EMAIL_PASS || ''
   }
 });
 

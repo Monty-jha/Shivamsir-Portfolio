@@ -1,14 +1,29 @@
 import nodemailer from 'nodemailer';
 import type { Contact } from '@shared/schema';
 
-// Create a Vercel-compatible email transporter
-const transporter = nodemailer.createTransport({
-  service: 'gmail', // You can change this to your email provider
-  auth: {
-    user: process.env.EMAIL_USER || 'shivam@metagrow.com',
-    pass: process.env.EMAIL_PASS || ''
+// Create a Vercel-compatible email transporter with better error handling
+const createTransporter = () => {
+  // Check if we have email credentials
+  const emailUser = process.env.EMAIL_USER;
+  const emailPass = process.env.EMAIL_PASS;
+  
+  if (!emailUser || !emailPass) {
+    console.warn('Email credentials not configured. Emails will not be sent.');
+    return null;
   }
-});
+
+  return nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: emailUser,
+      pass: emailPass
+    },
+    // Add timeout and connection settings for serverless
+    connectionTimeout: 10000,
+    greetingTimeout: 10000,
+    socketTimeout: 10000,
+  });
+};
 
 interface EmailParams {
   to: string;
@@ -20,6 +35,12 @@ interface EmailParams {
 
 export async function sendEmail(params: EmailParams): Promise<boolean> {
   try {
+    const transporter = createTransporter();
+    if (!transporter) {
+      console.warn('Email transporter not available');
+      return false;
+    }
+
     const mailOptions = {
       from: `"Shivam Mani Tripathi - MetaGrow" <${params.from}>`,
       to: params.to,

@@ -31,9 +31,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const contact = await storage.createContact(result.data);
     
-    // Send email notifications (if SendGrid is configured)
+    // Send email notifications (don't fail if email fails)
+    let emailSent = false;
     try {
       await sendContactFormEmails(contact);
+      emailSent = true;
     } catch (error) {
       console.error("Email sending failed:", error);
       // Don't fail the request if email fails
@@ -41,7 +43,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     
     res.status(201).json({ 
       message: "Thank you for your message! I will get back to you within 24 hours.",
-      contact: { id: contact.id }
+      contact: { id: contact.id },
+      emailSent: emailSent
     });
   } catch (error) {
     console.error("Contact form error:", error);

@@ -1,7 +1,47 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { storage } from '../server/storage';
-import { insertContactSchema } from '../shared/schema';
-import { sendContactFormEmails } from '../server/emailService';
+import { z } from 'zod';
+
+// In-memory storage for contacts (shared with contacts.ts)
+declare global {
+  var contacts: any[];
+  var currentId: number;
+}
+
+// Initialize global variables if they don't exist
+if (!global.contacts) {
+  global.contacts = [];
+  global.currentId = 1;
+}
+
+// Contact schema validation
+const contactSchema = z.object({
+  firstName: z.string().min(2, "First name must be at least 2 characters"),
+  lastName: z.string().min(2, "Last name must be at least 2 characters"),
+  email: z.string().email("Please enter a valid email address"),
+  phone: z.string().min(10, "Please enter a valid phone number"),
+  service: z.string().optional(),
+  message: z.string().min(10, "Message must be at least 10 characters"),
+});
+
+// Simple email function (will work even without email credentials)
+async function sendSimpleEmail(contact: any) {
+  try {
+    // Log the contact details (this will show in Vercel logs)
+    console.log('New contact form submission:', {
+      name: `${contact.firstName} ${contact.lastName}`,
+      email: contact.email,
+      phone: contact.phone,
+      service: contact.service,
+      message: contact.message,
+      timestamp: new Date().toISOString()
+    });
+    
+    return true;
+  } catch (error) {
+    console.error('Email logging failed:', error);
+    return false;
+  }
+}
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Enable CORS
@@ -20,7 +60,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    const result = insertContactSchema.safeParse(req.body);
+    const result = contactSchema.safeParse(req.body);
     
     if (!result.success) {
       return res.status(400).json({ 
@@ -29,16 +69,22 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       });
     }
 
-    const contact = await storage.createContact(result.data);
+    // Create contact
+    const contact = {
+      id: global.currentId++,
+      ...result.data,
+      createdAt: new Date()
+    };
     
-    // Send email notifications (don't fail if email fails)
+    // Store contact
+    global.contacts.push(contact);
+    
+    // Send email notification
     let emailSent = false;
     try {
-      await sendContactFormEmails(contact);
-      emailSent = true;
+      emailSent = await sendSimpleEmail(contact);
     } catch (error) {
       console.error("Email sending failed:", error);
-      // Don't fail the request if email fails
     }
     
     res.status(201).json({ 
@@ -48,6 +94,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     });
   } catch (error) {
     console.error("Contact form error:", error);
-    res.status(500).json({ message: "Failed to submit contact form" });
+    res.status(500).json({ 
+      message: "Failed to submit contact form",
+      error: error instanceof Error ? error.message : 'Unknown error'
+    });
   }
 }

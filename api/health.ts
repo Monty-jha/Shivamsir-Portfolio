@@ -1,17 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-// In-memory storage for contacts (shared with contact.ts)
-declare global {
-  var contacts: any[];
-  var currentId: number;
-}
-
-// Initialize global variables if they don't exist
-if (!global.contacts) {
-  global.contacts = [];
-  global.currentId = 1;
-}
-
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -31,11 +19,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     res.json({
       success: true,
-      data: global.contacts,
-      count: global.contacts.length
+      message: 'API is working!',
+      timestamp: new Date().toISOString(),
+      environment: process.env.NODE_ENV || 'development'
     });
   } catch (error) {
-    console.error("Get contacts error:", error);
-    res.status(500).json({ message: "Failed to fetch contacts" });
+    console.error("Health check error:", error);
+    res.status(500).json({ 
+      message: "Health check failed",
+      error: error instanceof Error ? error.message : 'Unknown error'
+    });
   }
 }
